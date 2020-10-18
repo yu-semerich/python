@@ -1,0 +1,17 @@
+import requests
+from bs4 import BeautifulSoup
+import os
+URL = ' ' #адрес страницы
+FILE = ' ' #имя страницы
+def load_url_contents_cached(url, local_file):
+    # если есть на диске, то считаем с диска
+    if os.path.exists(local_file):
+        with open(local_file, 'r') as f:
+            contents = f.read()
+    else:
+        # нет на диске - скачаем
+        contents = requests.get(url).text
+        # сохраним в файл
+        with open(local_file, 'w') as f:
+            f.write(contents)
+    return contents
